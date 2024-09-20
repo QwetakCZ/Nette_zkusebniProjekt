@@ -1,19 +1,138 @@
 <!DOCTYPE html>
-<html>
+<html lang="cs">
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>{block title}Moje stránka{/block}</title>
 
-	<title>{ifset title}{include title|stripHtml} | {/ifset}Nette Web</title>
+	<!-- Bootstrap CSS -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- Vlastní CSS pro můj layout stranky -->
+	<style>
+		html, body {
+			height: 100%;
+			margin: 0;
+		}
+		body {
+			display: flex;
+			flex-direction: column;
+			min-height: 100vh;
+		}
+		main {
+			display: flex;
+			flex: 1;
+		}
+
+		.container-fluid {
+			flex: 1;
+			display: flex;
+			margin-top: 0;
+			padding-top: 0;
+		}
+		nav {
+			flex: 0 0 20%;
+			background-color: #f8f9fa;
+			padding: 1rem;
+			box-sizing: border-box;
+			margin-top: 0;
+			padding-top: 0;
+		}
+		.row {
+			margin-top: 0;
+			padding-top: 0;
+		}
+		.d-flex {
+			display: flex;
+			flex: 1;
+		}
+		header {
+			margin-bottom: 0;
+		}
+
+		footer {
+			width: 100%;
+			background-color: #f8f9fa;
+			padding: 1rem 0;
+			margin-top: auto;
+		}
+	</style>
 </head>
-
 <body>
-	<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
 
-	{include content}
+{if $flashes}
+	<div class="flash-messages">
+		{foreach $flashes as $message}
+			<div class="alert alert-{$message->type} alert-dismissible fade show" role="alert">
+				{$message->message}
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			</div>
+		{/foreach}
+	</div>
+{/if}
 
-	{block scripts}
-	<script src="https://unpkg.com/nette-forms@3"></script>
-	{/block}
+
+<!-- Hlavička -->
+<header class="bg-light py-3">
+	<div class="container-fluid">
+		<div class="d-flex justify-content-between align-items-center">
+			<!-- Logo -->
+			<div>
+				<a href="{link Home:}" class="navbar-brand">
+					<img src="{$basePath}/images/logo.png" alt="Logo" height="50"> <!-- Logo stránky -->
+				</a>
+			</div>
+
+			<!-- Přihlášení / Odhlášení -->
+			<div>
+				{if $user->isLoggedIn()}
+					<h4 class="mx-2">Ahoj {$user->identity->username} </h4>
+					<a href="{link Sign:out}" class="btn btn-outline-danger">Odhlásit se</a>
+				{else}
+					<a href="{link Sign:in}" class="btn btn-outline-primary">Přihlásit se</a>
+				{/if}
+			</div>
+		</div>
+	</div>
+</header>
+
+<!-- Hlavní obsah s postranním menu -->
+<div class="container-fluid">
+	<div class="row flex-nowrap" style="flex: 1;">
+		<!-- Levé menu -->
+		<nav class="col-md-2">
+			<ul class="nav flex-column nav-pills">
+				<li class="nav-item">
+					<a class="nav-link {if $presenter->isLinkCurrent('Home:default')}active{/if} m-1" href="{link Home:default}">Domů</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link {if $presenter->name === 'Vykup'}active{/if} m-1" href="{link Vykup:show}">Výkup</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link {if $presenter->name === 'Dodavatele'}active{/if} m-1" href="{link Dodavatele:show}">Dodavatele</a>
+				</li>
+			</ul>
+		</nav>
+
+		<!-- Hlavní obsah stránky -->
+		<main class="col-md-10">
+
+			{block content}
+				<!-- Proste content -->
+			{/block}
+
+		</main>
+	</div>
+</div>
+
+<!-- Zápatí -->
+<footer>
+	<div class=" text-center">
+		<p>&copy; 2024 QwetakCZ. Všechna práva vyhrazena.</p>
+	</div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

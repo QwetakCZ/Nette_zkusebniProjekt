@@ -1,15 +1,24 @@
 <?php return array(
     'root' => array(
         'name' => 'nette/web-project',
-        'pretty_version' => 'dev-master',
-        'version' => 'dev-master',
-        'reference' => '48290a15b3673da83317994df4f0b3f2d51dcb4f',
+        'pretty_version' => 'v3.3.0',
+        'version' => '3.3.0.0',
+        'reference' => '4456dfa584c50aab3bcd46eac1613b49b345c873',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'dev' => true,
     ),
     'versions' => array(
+        'contributte/forms-bootstrap' => array(
+            'pretty_version' => 'v0.8.2',
+            'version' => '0.8.2.0',
+            'reference' => 'a8f6584978ab78f004e9f3ce391f1b1b376f6593',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../contributte/forms-bootstrap',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'latte/latte' => array(
             'pretty_version' => 'v3.0.18',
             'version' => '3.0.18.0',
@@ -173,9 +182,9 @@
             'dev_requirement' => false,
         ),
         'nette/web-project' => array(
-            'pretty_version' => 'dev-master',
-            'version' => 'dev-master',
-            'reference' => '48290a15b3673da83317994df4f0b3f2d51dcb4f',
+            'pretty_version' => 'v3.3.0',
+            'version' => '3.3.0.0',
+            'reference' => '4456dfa584c50aab3bcd46eac1613b49b345c873',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

@@ -1,5 +1,6 @@
 services:
 	- App\Core\RouterFactory::createRouter
+	- App\Model\Authenticator
 
 
 search:
@@ -7,3 +8,12 @@ search:
 		classes:
 			- *Factory
 			- *Facade
+			- *Manager
+
+security:
+    authentication:
+        expiration: 60 minutes
+        storage: session
+
+session:
+    autoStart: true

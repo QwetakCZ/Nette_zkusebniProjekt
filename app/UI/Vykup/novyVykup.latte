@@ -1,25 +1,45 @@
 {block content}
     <div class="container mt-5">
         <div class="row justify-content-left">
-            <h2 class="my-5">Nový dodavatel</h2>
+            <h2 class="my-5">Nový výkup</h2>
 
 
             <div class="col-md-2 ">
                 {form editForm}
                     <div class="form-group m-2">
-                        <label n:name="nazev" class="form-label">Název dodavatele</label>
-                        <input n:name="nazev" class="form-control" placeholder="Název dodavatele">
+                        <label n:name="plomba" class="form-label">Plomba</label>
+                        <input n:name="plomba" class="form-control" placeholder="Plomba">
                     </div>
                     <div class="form-group m-2">
-                        <label n:name="ico" class="form-label">IČO dodavatele</label>
-                        <input n:name="ico" class="form-control" placeholder="Ičo">
+                        <label n:name="vaha" class="form-label">Váha</label>
+                        <input n:name="vaha" class="form-control" placeholder="Váha">
+
+                        {if $form['vaha']->hasErrors()}
+                            <div class="text-danger">
+                                {foreach $form['vaha']->errors as $error}
+                                    <p>{$error}</p>
+                                {/foreach}
+                            </div>
+                        {/if}
+
                     </div>
                     <div class="form-group m-2">
-                        <label n:name="telefon" class="form-label">Telefon</label>
-                        <input n:name="telefon" class="form-control" placeholder="Telefon">
+                        <label n:name="dodavatel_id" class="form-label">Dodavatel</label>
+                        <select n:name="dodavatel_id" class="form-control" placeholder="Dodavatel"></select>
+                    </div>
+                    <div class="form-group m-2">
+                        <label n:name="prodejniCena" class="form-label">Prodejní cena</label>
+                        <input n:name="prodejniCena" class="form-control" placeholder="Prodejní cena">
+                        {if $form['prodejniCena']->hasErrors()}
+                            <div class="text-danger">
+                                {foreach $form['prodejniCena']->errors as $error}
+                                    <p>{$error}</p>
+                                {/foreach}
+                            </div>
+                        {/if}
                     </div>
                     <div class="form-group m-2 my-3">
-                        <button n:name="submit" class="btn btn-primary my-1">Odeslat</button>
+                        <button n:name="submit" class="btn btn-primary my-1">Uložit</button>
 
                     </div>
                 {/form}

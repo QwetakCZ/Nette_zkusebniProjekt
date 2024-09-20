@@ -1,3 +1,44 @@
-
 {block content}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <h2>Seznam dodavatelů</h2>
+            <div class="col-md-12">
+                <a href="{link Dodavatele:novyDodavatel}" class="btn btn-primary my-2">Nový dodavatel</a>
 
+
+                <div class="row justify-content-center">
+                    <div class="col-12">
+                        {if $dodavatele->count() > 0}
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Název</th>
+                                    <th>IČO</th>
+                                    <th>Telefon</th>
+                                    <th></th>
+
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {foreach $dodavatele as $dodavatel}
+                                    <tr>
+                                        <td>{$dodavatel->id}</td>
+                                        <td>{$dodavatel->nazev}</td>
+                                        <td>{$dodavatel->ico}</td>
+                                        <td>{$dodavatel->telefon}</td>
+                                        <td><a href="{link Dodavatele:editace, dodavatelId => $dodavatel->id}" class="btn btn-primary">Editace</a>
+                                        </td>
+                                    </tr>
+                                {/foreach}
+                                </tbody>
+                            </table>
+                        {else}
+                            <p>Žádní dodavatelé nebyli nalezeni.</p>
+                        {/if}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{/block}
