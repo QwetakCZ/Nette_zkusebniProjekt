@@ -1,0 +1,30 @@
+{block content}
+    <div class="container mt-5">
+        <div class="row justify-content-left">
+            <h2 class="my-5">Nový dodavatel</h2>
+
+
+            <div class="col-md-2 ">
+                {form editForm}
+                    <div class="form-group m-2">
+                        <label n:name="nazev" class="form-label">Název dodavatele</label>
+                        <input n:name="nazev" class="form-control" placeholder="Název dodavatele">
+                    </div>
+                    <div class="form-group m-2">
+                        <label n:name="ico" class="form-label">IČO dodavatele</label>
+                        <input n:name="ico" class="form-control" placeholder="Ičo">
+                    </div>
+                    <div class="form-group m-2">
+                        <label n:name="telefon" class="form-label">Telefon</label>
+                        <input n:name="telefon" class="form-control" placeholder="Telefon">
+                    </div>
+                    <div class="form-group m-2 my-3">
+                        <button n:name="submit" class="btn btn-primary my-1">Odeslat</button>
+
+                    </div>
+                {/form}
+            </div>
+        </div>
+    </div>
+
+{/block}
