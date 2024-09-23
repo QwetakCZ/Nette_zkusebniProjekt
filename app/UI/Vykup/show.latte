@@ -6,8 +6,8 @@
                 <a href="{link Vykup:novyVykup}" class="btn btn-primary my-2">Nový výkup</a>
 
 
-                <div class="row justify-content-center">
-                    <div class="col-12">
+                <div class="row justify-content-left">
+                    <div class="col-8">
                         {if $vykupy->count() > 0}
                             <table class="table table-striped">
                                 <thead class="table-dark">
@@ -16,8 +16,7 @@
                                     <th>Váha</th>
                                     <th>Dodavatel</th>
                                     <th>Prodejní cena</th>
-                                    <th></th>
-
+                                    <th class="text-end w-auto"></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -33,12 +32,17 @@
                                             {/if}
                                         </td>
                                         <td>{$vykup->prodejniCena} Kč</td>
-                                        <td><a href="{link Vykup:editace, vykupId => $vykup->id}" class="btn btn-primary">Editace</a>
+                                        <td class="text-end text-nowrap">
+                                            <!-- Zbavíme se d-flex a použijeme text-end na zarovnání tlačítek -->
+                                            <a href="{link Vykup:editace, vykupId => $vykup->id}" class="btn btn-primary me-2">Editace</a>
+                                            <a href="{link Vykup:exportToPdf, vykupId => $vykup->id}" class="btn btn-secondary me-2" target="_blank">Export do PDF</a>
+                                            <a href="{link Vykup:exportToPdf, vykupId => $vykup->id, sendByEmail => true}" class="btn btn-outline-success me-2" target="_blank">Export do PDF</a>
                                         </td>
                                     </tr>
                                 {/foreach}
                                 </tbody>
                             </table>
+
                         {else}
                             <p>Žádní dodavatelé nebyli nalezeni.</p>
                         {/if}

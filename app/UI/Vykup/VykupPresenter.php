@@ -7,6 +7,7 @@ namespace App\UI\Vykup;
 use App\Model\DodavateleManager;
 use App\Model\VykupManager;
 use Contributte\FormsBootstrap\BootstrapForm;
+use Mpdf\Mpdf;
 use Nette;
 
 
@@ -63,6 +64,66 @@ final class VykupPresenter extends Nette\Application\UI\Presenter
 
     public function actionNovyVykup()
     {
+
+    }
+
+    //akce na export vykupu do pdf souboru
+    public function actionExportToPdf(int $vykupId, bool $sendByEmail = false):void
+    {
+        //nacitame si vykup do promene
+        $vykup = $this->vykupManager->getVykupById($vykupId, $this->userId);
+        //kdyz se nenajde ...
+        if (!$vykup) {
+            $this->flashMessage('Vykup nebyl nalezen.', 'danger');
+            $this->redirect('Vykup:show');
+        }
+        //potrebuji ziskat jmeno dodavatele z jeho id
+        $dodavatelNazev = $this->dodavateleManager->findDodavatelById($vykup->dodavatel_id , $this->userId);
+        $template = $this->createTemplate();
+        $template->vykup = $vykup;
+        //poslani nazvu dodavatele do sablony
+        $template->dodavatelNazev = $dodavatelNazev;
+        //neco co mi nasloucha a vytvori z toho string
+       ob_start();
+       $template->setFile(__DIR__ . '/../../../www/templates/pdf_template.latte');
+       //zapsani ze sablony do stringu
+       $template->render();
+       $html = ob_get_clean();
+
+        //vytvoreni instance mpdf pro pdf soubor
+       $pdf = new Mpdf();
+
+       $pdf->WriteHTML($html);
+        //podminka na zjisteni jestli se ma vykreslit soubor a nebo poslat mailem
+       if(!$sendByEmail) {
+
+           $pdf->Output('vykup_' . $vykupId . '.pdf', \Mpdf\Output\Destination::INLINE);
+
+       }else
+       {
+           // Uložení PDF do dočasného souboru
+           $pdfFilePath = __DIR__ . '/../../../www/temp/vykup_' . $vykupId . '.pdf';
+           $pdf->Output($pdfFilePath, \Mpdf\Output\Destination::FILE);
+
+           // Odeslání emailu s přílohou
+           $mail = new Nette\Mail\Message();
+           $mail->setFrom('noreply@domena.cz')
+               ->addTo('prijemce@domena.cz')
+               ->setSubject('Export vykupu')
+               ->setBody('Přikládám PDF export vykupu.')
+               ->addAttachment($pdfFilePath);
+
+           $mailer = new Nette\Mail\SendmailMailer();
+           $mailer->send($mail);
+
+           // odstraneni souboru z temp
+           unlink($pdfFilePath);
+
+           // Přesměrování nebo flash message
+           $this->flashMessage('PDF bylo úspěšně odesláno na email.', 'success');
+           $this->redirect('Vykup:show');
+       }
+
 
     }
 

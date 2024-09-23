@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <title>Výkup</title>
+    <style>
+        body {
+            font-family: DejaVu Sans, sans-serif;
+        }
+        h1 {
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+<h1>Výkup</h1>
+<table>
+    <tr>
+        <th>Plomba</th>
+        <td>{$vykup->plomba}</td>
+    </tr>
+    <tr>
+        <th>Váha</th>
+        <td>{$vykup->vaha}</td>
+    </tr>
+    <tr>
+        <th>Dodavatel</th>
+        <td>{$dodavatelNazev['nazev']}</td>
+    </tr>
+    <tr>
+        <th>Prodejní cena</th>
+        <td>{$vykup->prodejniCena}</td>
+    </tr>
+</table>
+</body>
+</html>
